@@ -1,0 +1,48 @@
+function init(self)
+	self.playerid = ""
+	self.alive = true
+	self.speed = 200
+	local pos = go.get_position()
+	self.dir = vmath.normalize(_G.player_pos - pos)
+	self.velocity = self.dir * self.speed
+	self.lifetime = 1.5
+end
+
+
+function on_message(self, message_id, message, sender)
+	-- find out if player is touching the floor
+	if message_id == hash("contact_point_response")
+	and message.other_group == hash("ground") then
+		if self.dir.y < 0 then
+			self.alive = false
+		end
+	end
+
+	-- find out if player is touching wall
+	if message_id == hash("contact_point_response")
+	and message.other_group == hash("L-Wall") then
+		self.alive = false
+	end
+
+	if message_id == hash("contact_point_response")
+	and message.other_group == hash("R-Wall") then
+		self.alive = false
+	end
+
+	if message_id == hash("contact_point_response")
+	and message.other_group == hash("Roof") then
+		self.alive = false
+	end
+end
+
+function update(self, dt)
+	local pos = go.get_position()
+	pos = pos + self.velocity * dt
+	go.set_position(pos)
+
+	self.lifetime = self.lifetime - dt
+	
+	if self.alive == false or self.lifetime <= 0 then
+		go.delete(".")
+	end
+end

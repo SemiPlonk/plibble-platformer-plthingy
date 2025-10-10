@@ -1,0 +1,35 @@
+function init(self)
+	self.alive = true
+	self.pos = go.get_position()
+	self.shoot_timer = 0
+end
+
+
+function on_message(self, message_id, message, sender)
+	-- actual murder
+	if message_id == hash("collision_response")
+	and message.other_group == hash("feet") then
+		self.alive = false
+	end
+end
+
+function update(self, dt)
+	if self.shoot_timer > 0 then
+		self.shoot_timer = self.shoot_timer - dt
+	end
+	
+	if _G.player_pos.x - self.pos.x > -175 and _G.player_pos.x - self.pos.x < 175 then
+		if self.shoot_timer <= 0 then
+			factory.create("#shooter", self.pos)
+			self.shoot_timer = 1.25
+		end
+	end
+	
+end
+
+function fixed_update(self, dt)
+	if self.alive == false then
+		_G.score = _G.score + 750
+		go.delete(".")
+	end
+end

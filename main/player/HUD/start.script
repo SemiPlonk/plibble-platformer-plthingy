@@ -1,0 +1,4 @@
+function init(self)
+	_G.score = 10000
+	_G.lives = 3
+end

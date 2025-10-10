@@ -1,0 +1,34 @@
+name: "main"
+instances {
+  id: "camera"
+  prototype: "/main/player/camera.go"
+}
+scale_along_z: 0
+embedded_instances {
+  id: "controller"
+  data: "components {\n"
+  "  id: \"debug\"\n"
+  "  component: \"/main/stages/debug level/debug.collectionproxy\"\n"
+  "}\n"
+  "components {\n"
+  "  id: \"main loader\"\n"
+  "  component: \"/main/manager.script\"\n"
+  "}\n"
+  "components {\n"
+  "  id: \"death\"\n"
+  "  component: \"/main/stages/death/death.collectionproxy\"\n"
+  "}\n"
+  "components {\n"
+  "  id: \"menu\"\n"
+  "  component: \"/main/stages/main menu/menu.collectionproxy\"\n"
+  "}\n"
+  ""
+}
+embedded_instances {
+  id: "scripts of doom"
+  data: "components {\n"
+  "  id: \"start\"\n"
+  "  component: \"/main/player/HUD/start.script\"\n"
+  "}\n"
+  ""
+}

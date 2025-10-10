@@ -1,0 +1,28 @@
+images {
+  image: "/graphics/Placeholder guy.png"
+}
+images {
+  image: "/graphics/almost white.png"
+}
+images {
+  image: "/graphics/Test enemy.png"
+}
+images {
+  image: "/graphics/debug tully monster (important).png"
+}
+images {
+  image: "/graphics/projectile.png"
+}
+images {
+  image: "/graphics/shooter guy.png"
+}
+images {
+  image: "/graphics/blu.png"
+}
+images {
+  image: "/graphics/fully white box this time.png"
+}
+images {
+  image: "/graphics/grey.png"
+}
+extrude_borders: 2

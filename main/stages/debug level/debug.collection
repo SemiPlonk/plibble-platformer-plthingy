@@ -1,0 +1,133 @@
+name: "debug"
+instances {
+  id: "Spawnpoint"
+  prototype: "/main/player/spawner/Spawnpoint.go"
+  position {
+    x: -73.0
+    y: 150.0
+  }
+}
+instances {
+  id: "camera"
+  prototype: "/main/player/camera.go"
+  position {
+    z: 450.0
+  }
+}
+instances {
+  id: "enemy shooter"
+  prototype: "/main/enemies/shooter/enemy shooter.go"
+  position {
+    x: 195.0
+    y: 15.0
+  }
+}
+instances {
+  id: "manager"
+  prototype: "/main/player/HUD/manager.go"
+}
+scale_along_z: 0
+embedded_instances {
+  id: "debug"
+  data: "components {\n"
+  "  id: \"debug\"\n"
+  "  component: \"/main/stages/debug level/debug.tilemap\"\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"ground\"\n"
+  "  type: \"collisionobject\"\n"
+  "  data: \"collision_shape: \\\"/main/stages/debug level/debug.tilemap\\\"\\n"
+  "type: COLLISION_OBJECT_TYPE_STATIC\\n"
+  "mass: 0.0\\n"
+  "friction: 0.1\\n"
+  "restitution: 0.5\\n"
+  "group: \\\"ground\\\"\\n"
+  "mask: \\\"feet\\\"\\n"
+  "mask: \\\"enemy\\\"\\n"
+  "locked_rotation: true\\n"
+  "\"\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"water\"\n"
+  "  type: \"collisionobject\"\n"
+  "  data: \"collision_shape: \\\"/main/stages/debug level/debug.tilemap\\\"\\n"
+  "type: COLLISION_OBJECT_TYPE_STATIC\\n"
+  "mass: 0.0\\n"
+  "friction: 0.1\\n"
+  "restitution: 0.5\\n"
+  "group: \\\"water\\\"\\n"
+  "mask: \\\"player\\\"\\n"
+  "mask: \\\"e-head\\\"\\n"
+  "locked_rotation: true\\n"
+  "\"\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"L-Wall\"\n"
+  "  type: \"collisionobject\"\n"
+  "  data: \"collision_shape: \\\"/main/stages/debug level/debug.tilemap\\\"\\n"
+  "type: COLLISION_OBJECT_TYPE_STATIC\\n"
+  "mass: 0.0\\n"
+  "friction: 0.1\\n"
+  "restitution: 0.5\\n"
+  "group: \\\"L-Wall\\\"\\n"
+  "mask: \\\"player\\\"\\n"
+  "mask: \\\"enemy\\\"\\n"
+  "locked_rotation: true\\n"
+  "\"\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"R-Wall\"\n"
+  "  type: \"collisionobject\"\n"
+  "  data: \"collision_shape: \\\"/main/stages/debug level/debug.tilemap\\\"\\n"
+  "type: COLLISION_OBJECT_TYPE_STATIC\\n"
+  "mass: 0.0\\n"
+  "friction: 0.1\\n"
+  "restitution: 0.5\\n"
+  "group: \\\"R-Wall\\\"\\n"
+  "mask: \\\"player\\\"\\n"
+  "mask: \\\"enemy\\\"\\n"
+  "locked_rotation: true\\n"
+  "\"\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"Roof\"\n"
+  "  type: \"collisionobject\"\n"
+  "  data: \"collision_shape: \\\"/main/stages/debug level/debug.tilemap\\\"\\n"
+  "type: COLLISION_OBJECT_TYPE_STATIC\\n"
+  "mass: 0.0\\n"
+  "friction: 0.1\\n"
+  "restitution: 0.5\\n"
+  "group: \\\"Roof\\\"\\n"
+  "mask: \\\"player\\\"\\n"
+  "mask: \\\"enemy\\\"\\n"
+  "locked_rotation: true\\n"
+  "\"\n"
+  "}\n"
+  ""
+}
+embedded_instances {
+  id: "Background"
+  data: "embedded_components {\n"
+  "  id: \"sprite\"\n"
+  "  type: \"sprite\"\n"
+  "  data: \"default_animation: \\\"blu\\\"\\n"
+  "material: \\\"/builtins/materials/sprite.material\\\"\\n"
+  "textures {\\n"
+  "  sampler: \\\"texture_sampler\\\"\\n"
+  "  texture: \\\"/main/sprites.atlas\\\"\\n"
+  "}\\n"
+  "\"\n"
+  "  scale {\n"
+  "    x: 1.76933\n"
+  "    y: 1.17673\n"
+  "  }\n"
+  "}\n"
+  ""
+  position {
+    z: -2.0
+  }
+  scale3 {
+    x: 15.888876
+    y: 7.284536
+  }
+}

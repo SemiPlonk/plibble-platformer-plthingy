@@ -1,0 +1,38 @@
+function init(self)
+	msg.post(".", "acquire_input_focus")
+	self.selected = 1
+	self.select = 0
+end
+
+function on_input(self, action_id, action)
+	if action_id == hash("Up") and action.pressed then
+		self.selected = self.selected + 1
+	end
+	if action_id == hash("Down") and action.pressed then
+		self.selected = self.selected - 1
+	end
+	if action_id == hash("Jump") then
+		self.select = 1
+	end
+end
+
+function update(self, dt)
+	if self.select == 1 then
+		if self.selected == 1 then
+			_G.levelid = "#debug"
+			_G.newlevel = true
+		elseif self.selected == 2 then
+			msg.post("@system:", "exit", {code = 0})
+		end
+		self.select = 0
+	end
+	
+	if self.selected > 2 then
+		self.selected = 1
+	end
+	if self.selected < 1 then
+		self.selected = 2
+	end
+	
+	self.select = 0
+end
