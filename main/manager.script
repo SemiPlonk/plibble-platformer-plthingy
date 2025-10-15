@@ -13,6 +13,7 @@ function fixed_update(self, dt)
 		_G.reload = false
 		msg.post(self.current, "unload")
 		msg.post("#death", "load")
+		self.current = "#death"
 	end
 
 	if _G.newlevel == true then
@@ -21,7 +22,6 @@ function fixed_update(self, dt)
 		msg.post(_G.levelid, "load")
 		self.current = _G.levelid
 	end
-	print(_G.levelid)
 end
 
 function on_message(self, message_id, message, sender)

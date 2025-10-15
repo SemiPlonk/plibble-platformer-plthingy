@@ -25,4 +25,7 @@ images {
 images {
   image: "/graphics/grey.png"
 }
+images {
+  image: "/graphics/restart text.png"
+}
 extrude_borders: 2
