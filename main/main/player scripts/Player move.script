@@ -1,0 +1,108 @@
+local Gravity = 200
+
+function init(self)
+	msg.post(".", "acquire_input_focus")
+	self.velocity = 0
+	self.acceleration = 250
+	self.max_speed = 250
+	self.friction = 300
+	self.left_pressed = false
+	self.right_pressed = false
+	self.input_dir = 0
+
+	self.Yvelocity = 0
+	self.ground_contact = false
+end
+
+function update(self, dt)
+	-- Determine input_dir based on keys currently pressed
+	if self.left_pressed and not self.right_pressed then
+		self.input_dir = -1
+	elseif self.right_pressed and not self.left_pressed then
+		self.input_dir = 1
+	else
+		self.input_dir = 0
+	end
+
+	if self.input_dir ~= 0 then
+		-- If input direction is opposite velocity, apply deceleration faster
+		if (self.velocity > 0 and self.input_dir == -1) or (self.velocity < 0 and self.input_dir == 1) then
+			-- decelerate faster (use acceleration as braking force)
+			local brake = self.acceleration * 2 -- braking is stronger
+			self.velocity = self.velocity + self.input_dir * brake * dt
+			-- Clamp velocity so it doesn't overshoot zero
+			if (self.velocity > 0 and self.input_dir == 1) or (self.velocity < 0 and self.input_dir == -1) then
+				self.velocity = 0
+			end
+		else
+			-- accelerate normally
+			self.velocity = self.velocity + self.input_dir * self.acceleration * dt
+			-- clamp max speed
+			if self.velocity > self.max_speed then self.velocity = self.max_speed end
+			if self.velocity < -self.max_speed then self.velocity = -self.max_speed end
+		end
+	else
+		-- inputless friction
+		if self.velocity > 0 then
+			self.velocity = self.velocity - self.friction * dt
+			if self.velocity < 0 then self.velocity = 0 end
+		elseif self.velocity < 0 then
+			self.velocity = self.velocity + self.friction * dt
+			if self.velocity > 0 then self.velocity = 0 end
+		end
+	end
+
+	local pos = go.get_position()
+	pos.x = pos.x + self.velocity * dt
+	go.set_position(pos)
+end
+
+function on_input(self, action_id, action)
+	if action_id == hash("PMLeft") then
+		if action.pressed or action.repeated then
+			self.left_pressed = true
+		elseif action.released then
+			self.left_pressed = false
+		end
+	elseif action_id == hash("PMRight") then
+		if action.pressed or action.repeated then
+			self.right_pressed = true
+		elseif action.released then
+			self.right_pressed = false
+		end
+	end
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("contact_point_response")
+	and message.other_group == hash("ground") then
+		self.ground_contact = true
+		if self.Yvelocity <= 0 then
+			self.Yvelocity = 0
+		end
+	end
+
+	if message_id == hash("contact_point_response")
+	and message.other_group == hash("wall") then
+		self.velocity = 0
+	end
+end
+
+-- This handles falling
+function fixed_update(self, dt)
+	
+	self.Yvelocity = self.Yvelocity - Gravity * dt --Makes player fall
+	
+	if self.ground_contact then
+		if self.Yvelocity <= 0 then
+			self.Yvelocity = 0
+		end
+	end
+
+	local pos = go.get_position()
+	pos.y = pos.y + self.Yvelocity * dt
+	go.set_position(pos)
+
+	self.ground_contact = false
+	
+end

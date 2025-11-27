@@ -1,0 +1,38 @@
+local FADE_SPEED = 5
+
+function init(self)
+	self.current_opacity = 1
+	self.target_opacity = 1
+	self.in_water = false
+	self.colliding = false
+end
+
+function on_message(self, message_id, message)
+	if message_id == hash("collision_response") and message.other_group == hash("water") then
+		self.colliding = true
+
+		if not self.in_water then
+			self.in_water = true
+			self.target_opacity = 0.35  -- The opacity in water
+			print("Entered water")
+		end
+	end
+end
+
+function update(self, dt)
+	-- Detect water exit if no collision this frame
+	if self.in_water and not self.colliding then
+		self.in_water = false
+		self.target_opacity = 1.0
+		print("Exited water")
+	end
+
+	self.colliding = false -- Reset every frame
+
+	-- Smooth fade toward target opacity
+	if math.abs(self.current_opacity - self.target_opacity) > 0.01 then
+		self.current_opacity = vmath.lerp(dt * FADE_SPEED, self.current_opacity, self.target_opacity)
+		local tint = vmath.vector4(1, 1, 1, self.current_opacity)
+		sprite.set_constant("#sprite", "tint", tint)
+	end
+end
