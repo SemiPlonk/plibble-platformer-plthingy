@@ -1,0 +1,29 @@
+[bootstrap]
+main_collection = /main/manager.collectionc
+
+[script]
+shared_state = 1
+
+[display]
+width = 1920
+height = 1080
+
+[android]
+input_method = HiddenInputField
+
+[project]
+title = Game
+
+[physics]
+max_collision_object_count = 50000
+type = 2D
+max_collisions = 50000
+max_contacts = 1000
+
+[engine]
+fixed_update_frequency = 60
+
+[tilemap]
+max_count = 32
+max_tile_count = 204800
+

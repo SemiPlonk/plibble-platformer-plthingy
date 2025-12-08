@@ -1,0 +1,6 @@
+function update(self, dt)
+	if _G.CamActive then
+		gui.set_text(gui.get_node("score"), "score = " .. tostring(_G.score))
+		gui.set_text(gui.get_node("lives"), "lives = " .. tostring(_G.lives))
+	end
+end

@@ -1,17 +1,40 @@
 images {
   image: "/graphics/Placeholder guy.png"
-  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
-}
-images {
-  image: "/graphics/grey.png"
-  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
 images {
   image: "/graphics/almost white.png"
-  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
-margin: 0
+images {
+  image: "/graphics/Test enemy.png"
+}
+images {
+  image: "/graphics/debug tully monster (important).png"
+}
+images {
+  image: "/graphics/projectile.png"
+}
+images {
+  image: "/graphics/shooter guy.png"
+}
+images {
+  image: "/graphics/blu.png"
+}
+images {
+  image: "/graphics/fully white box this time.png"
+}
+images {
+  image: "/graphics/grey.png"
+}
+images {
+  image: "/graphics/main menu.png"
+}
+images {
+  image: "/graphics/space continue.png"
+}
+images {
+  image: "/graphics/placeholder menu.png"
+}
+images {
+  image: "/graphics/door of doom.png"
+}
 extrude_borders: 2
-inner_padding: 0
-max_page_width: 0
-max_page_height: 0

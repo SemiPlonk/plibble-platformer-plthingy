@@ -1,0 +1,68 @@
+script: "/main/player/HUD/gui script.gui_script"
+fonts {
+  name: "default"
+  font: "/builtins/fonts/default.font"
+}
+nodes {
+  position {
+    x: 964.0
+    y: 81.0
+  }
+  scale {
+    x: 12.821276
+    y: 1.75
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  color {
+    x: 0.502
+    y: 0.502
+    z: 0.502
+  }
+  type: TYPE_BOX
+  id: "bottom box"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: 1659.0
+    y: 141.0
+  }
+  scale {
+    x: 2.0
+    y: 2.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "score =\n"
+  ""
+  font: "default"
+  id: "score"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 1659.0
+    y: 73.0
+  }
+  scale {
+    x: 2.0
+    y: 2.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "lives ="
+  font: "default"
+  id: "lives"
+  inherit_alpha: true
+}
+material: "/builtins/materials/gui.material"
