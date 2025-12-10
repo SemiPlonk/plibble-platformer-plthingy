@@ -1,0 +1,5 @@
+function update(self, dt)
+	if _G.reload == true then
+		msg.post("#camera", "acquire_camera_focus")
+	end
+end

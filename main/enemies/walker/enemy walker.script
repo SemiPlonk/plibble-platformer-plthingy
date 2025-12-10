@@ -1,0 +1,151 @@
+function init(self)
+	self.playerid = ""
+	self.speed = 0
+	self.maxspeed = 100
+	self.velocity = 0
+	self.acceleration = 0
+	self.right_contact = false
+	self.right_contactV = false
+	self.left_contact = false
+	self.left_contactV = false
+	self.roof_contact = false
+
+	self.Yvelocity = 0
+	self.Gravity = 200
+	self.ground_contact = false
+
+	self.alive = true
+end
+
+
+function on_message(self, message_id, message, sender)
+	-- find out if player is touching the floor
+	if message_id == hash("contact_point_response")
+	and message.other_group == hash("ground") then
+		self.ground_contact = true
+	end
+
+	-- find out if player is touching wall
+	if message_id == hash("contact_point_response")
+	and message.other_group == hash("L-Wall") then
+		self.left_contact = true
+		self.left_contactV = true
+	end
+	
+	if message_id == hash("contact_point_response")
+	and message.other_group == hash("R-Wall") then
+		self.right_contact = true
+		self.right_contactV = true
+	end
+	
+	if message_id == hash("contact_point_response")
+	and message.other_group == hash("Roof") then
+		self.roof_contact = true
+	end
+
+	-- ok so what if it was the same as the other ones... but with water?
+	if message_id == hash("collision_response")
+	and message.other_group == hash("water") then
+		self.inwater = true
+	end
+
+
+	-- actual murder
+	if message_id == hash("collision_response")
+	and message.other_group == hash("feet") then
+		self.alive = false
+	end
+end
+
+function update(self, dt)
+
+	local pos = go.get_position()
+	
+	if _G.player_pos.x - pos.x == 0 then
+		self.acceleration = 0
+	elseif _G.player_pos.x > pos.x then
+		self.acceleration = 10
+	elseif _G.player_pos.x < pos.x then
+		self.acceleration = -10
+	end
+	
+	self.velocity = self.velocity + self.acceleration / 2
+	if self.velocity > self.maxspeed then
+		self.velocity = self.maxspeed
+	elseif self.velocity < -self.maxspeed then
+		self.velocity = -self.maxspeed
+	end
+
+
+	
+	--wall collisions
+	if self.left_contact then
+		if self.velocity < 0 then
+			self.velocity = 0
+		end
+	end
+	
+	if self.right_contact then
+		if self.velocity > 0 then
+			self.velocity = 0
+		end
+	end
+
+
+	local pos = go.get_position()
+	pos.x = pos.x + self.velocity * dt
+	go.set_position(pos)
+	self.left_contact = false
+	self.right_contact = false
+end
+
+function fixed_update(self, dt)
+
+	-- wow you have functional legs
+	--(jump)
+
+	if not self.ground_contact then
+		if self.inwater then
+			self.Yvelocity = self.Yvelocity - (self.Gravity * 0.4) * dt
+			self.inwater = false
+		else
+			self.Yvelocity = self.Yvelocity - self.Gravity * dt
+		end
+	end
+
+	if self.left_contactV or self.right_contactV then
+		if self.ground_contact then
+			self.Yvelocity = 150
+		end
+	end
+
+	
+	if self.ground_contact then
+		if self.Yvelocity <= 0 then
+			self.Yvelocity = 0
+		end
+	end
+
+	if self.roof_contact then
+		if self.Yvelocity >= 0 then
+			self.Yvelocity = 0
+		end
+	end
+
+	local pos = go.get_position()
+	pos.y = pos.y + self.Yvelocity * dt
+	go.set_position(pos)
+
+	if self.alive == false then
+		_G.score = _G.score + 250
+		go.delete(".")
+	end
+		
+
+	-- This solves like every issue
+	self.ground_contact = false
+	self.roof_contact = false
+	self.jumping = false
+	self.right_contactV = false
+	self.left_contactV = false
+end
